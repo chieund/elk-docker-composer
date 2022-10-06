@@ -17,9 +17,9 @@ const (
 
 func main() {
 	// Setup dashboards in Kibana (not required step)
-	if err := setupDashboards(); err != nil {
-		fmt.Printf("failed to setup Kibana dashboards, error: %s\n", err.Error())
-	}
+	//if err := setupDashboards(); err != nil {
+	//	fmt.Printf("failed to setup Kibana dashboards, error: %s\n", err.Error())
+	//}
 
 	os.OpenFile(logPath, os.O_RDONLY|os.O_CREATE, 0666)
 	c := zap.NewProductionConfig()

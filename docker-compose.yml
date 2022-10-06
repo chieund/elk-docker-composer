@@ -2,9 +2,9 @@ version: '3.3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.1
-    container_name: 'elasticsearch'
+    container_name: elasticsearch
     volumes:
-      - /Users/mac/Desktop/Project/elk-docker-composer/data:/usr/share/elasticsearch/data
+      - esdata1:/usr/share/elasticsearch/data
     environment:
       node.name: es01
       cluster.name: es-docker-cluster
@@ -13,7 +13,7 @@ services:
       network.host: 0.0.0.0
       discovery.type: single-node
     ports:
-      - '9200:9200'
+      - 9200:9200
     ulimits:
       memlock:
         soft: -1
@@ -24,7 +24,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:7.7.1
     ports:
-      - "5601:5601"
+      - 5601:5601
     depends_on:
       - elasticsearch
     networks:
@@ -33,8 +33,9 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.7.1
     container_name: filebeat
+    command: filebeat -e -strict.perms=false
     volumes:
-      - './config/filebeat.yml:/usr/share/filebeat/filebeat.yml'
+      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/:/logs/
     depends_on:
       - elasticsearch
@@ -55,6 +56,10 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+volumes:
+  esdata1:
+    driver: local
 
 networks:
   elk:

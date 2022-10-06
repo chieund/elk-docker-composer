@@ -23,4 +23,6 @@ https://stackoverflow.com/questions/45122459/mounts-denied-the-paths-are-not-sha
 Kibana server is not ready yet
 Fix
 curl --request DELETE 'http://localhost:9200/.kibana*'
+
+curl -H "Content-Type: application/json" 0:9200/_cat/indices?v | grep -i kibana
 ```
